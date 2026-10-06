@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CEM — Fleet</title>
+<link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+<main>
+<h1>Fleet status</h1>
+<p><a href="/">Home</a> · All times Asia/Kolkata</p>
+<label>Bearer token <input id="token" type="password" size="40" placeholder="dev-user:you@x:secret or Firebase ID token"></label>
+<button id="save">Save</button>
+<button id="refresh">Refresh</button>
+<table id="fleet">
+<thead><tr><th>Node</th><th>Room</th><th>Status</th><th>Last seen</th><th>FW</th>
+<th>Mode</th><th>Complete 24h</th><th>Clock offset</th><th>Calib age</th><th>Active flags</th></tr></thead>
+<tbody></tbody>
+</table>
+<p id="err"></p>
+</main>
+<script src="/static/api.js"></script>
+<script src="/static/fleet.js"></script>
+</body>
+</html>

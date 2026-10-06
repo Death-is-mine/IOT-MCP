@@ -1,0 +1,10 @@
+body { font-family: system-ui, sans-serif; max-width: 70rem; margin: 2rem auto; padding: 0 1rem; }
+table { border-collapse: collapse; width: 100%; }
+th, td { border: 1px solid #ccc; padding: 0.3rem 0.5rem; text-align: left; font-size: 0.9rem; }
+nav ul { list-style: none; padding: 0; }
+nav li { margin: 0.3rem 0; }
+.chart { position: relative; }
+.uplot { position: relative; }
+.band { position: absolute; top: 0; bottom: 0; opacity: 0.25; pointer-events: auto; }
+.band.warn { background: orange; }
+.band.err { background: red; }

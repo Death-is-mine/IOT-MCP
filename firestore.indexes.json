@@ -1,0 +1,48 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "samples",
+      "queryScope": "COLLECTION",
+      "fields": [{ "fieldPath": "ts", "order": "ASCENDING" }]
+    },
+    {
+      "collectionGroup": "entries",
+      "queryScope": "COLLECTION",
+      "fields": [{ "fieldPath": "ts", "order": "ASCENDING" }]
+    },
+    {
+      "collectionGroup": "flags",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "node_id", "order": "ASCENDING" },
+        { "fieldPath": "ts_start", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "flags",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "node_id", "order": "ASCENDING" },
+        { "fieldPath": "ts_end", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "labels",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "room_id", "order": "ASCENDING" },
+        { "fieldPath": "ts_start", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "audit_log",
+      "queryScope": "COLLECTION",
+      "fields": [{ "fieldPath": "ts", "order": "DESCENDING" }]
+    },
+    {
+      "collectionGroup": "eval_runs",
+      "queryScope": "COLLECTION",
+      "fields": [{ "fieldPath": "created_ts", "order": "DESCENDING" }]
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CEM — Node</title>
+<link rel="stylesheet" href="/static/app.css">
+<link rel="stylesheet" href="/static/vendor/uPlot.min.css">
+</head>
+<body>
+<main>
+<h1>Node detail</h1>
+<p><a href="/">Home</a> · <a href="/fleet">Fleet</a> · All times Asia/Kolkata</p>
+<label>Bearer token <input id="token" type="password" size="30"></label>
+<label>Node <select id="node"></select></label>
+<span id="ranges">
+<button data-h="1">1h</button><button data-h="6">6h</button><button data-h="24">24h</button><button data-h="168">7d</button>
+</span>
+<button id="refresh">Refresh</button>
+<h2>Power</h2>
+<div id="ch_power" class="chart"></div>
+<h2>Presence (PIR / load / mmWave)</h2>
+<div id="ch_pres" class="chart"></div>
+<h3>Flags &amp; events in range</h3>
+<table id="flags"><thead><tr><th>Start</th><th>End</th><th>Type</th><th>Severity</th></tr></thead><tbody></tbody></table>
+<p id="err"></p>
+</main>
+<script src="/static/vendor/uPlot.iife.min.js"></script>
+<script src="/static/api.js"></script>
+<script src="/static/node.js"></script>
+</body>
+</html>

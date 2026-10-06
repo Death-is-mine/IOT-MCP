@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CEM — Export</title>
+<link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+<main>
+<h1>Reproducible export</h1>
+<p><a href="/">Home</a> · ZIP with data.csv + manifest.json + data dictionary. Byte-identical for identical inputs.</p>
+<label>Bearer token <input id="token" type="password" size="30"></label>
+<button id="save">Save</button>
+<label>Rooms (comma separated) <input id="rooms" size="30"></label>
+<label>From <input id="from" type="datetime-local"></label>
+<label>To <input id="to" type="datetime-local"></label>
+<button id="go">Create export</button>
+<p id="out"></p>
+<p id="err"></p>
+</main>
+<script src="/static/api.js"></script>
+<script src="/static/export.js"></script>
+</body>
+</html>

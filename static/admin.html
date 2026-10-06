@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CEM — Admin</title>
+<link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+<main>
+<h1>Admin</h1>
+<p><a href="/">Home</a> · All times Asia/Kolkata</p>
+<label>Admin bearer token <input id="token" type="password" size="40"></label>
+<button id="save">Save</button>
+<h2>Nodes</h2>
+<label>Node id <input id="nid"></label>
+<label>Room <input id="room"></label>
+<button id="addnode">Register (token shown once)</button>
+<pre id="newtok"></pre>
+<table id="nodes"><thead><tr><th>Node</th><th>Room</th><th>Status</th><th>FW</th>
+<th>Actions</th></tr></thead><tbody></tbody></table>
+<h2>Users</h2>
+<label>Email <input id="email"></label>
+<label>Role <select id="role"><option>viewer</option><option>labeller</option><option>admin</option></select></label>
+<button id="adduser">Add / update</button>
+<table id="users"><thead><tr><th>Email</th><th>Role</th><th>Active</th><th>Action</th></tr></thead><tbody></tbody></table>
+<h2>Audit log</h2>
+<button id="audit">Refresh audit</button>
+<table id="auditlog"><thead><tr><th>Time</th><th>Actor</th><th>Action</th><th>Target</th><th>Detail</th></tr></thead><tbody></tbody></table>
+<p id="err"></p>
+</main>
+<script src="/static/api.js"></script>
+<script src="/static/admin.js"></script>
+</body>
+</html>
