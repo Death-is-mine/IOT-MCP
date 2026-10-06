@@ -1,7 +1,3 @@
-document.getElementById("save").onclick = () => {
-  localStorage.setItem("cem_token", document.getElementById("token").value.trim());
-};
-document.getElementById("token").value = cemToken();
 document.getElementById("refresh").onclick = load;
 
 async function load() {

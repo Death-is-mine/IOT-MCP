@@ -9,9 +9,9 @@
 <body>
 <main>
 <h1>Reproducible export</h1>
-<p><a href="/">Home</a> · ZIP with data.csv + manifest.json + data dictionary. Byte-identical for identical inputs.</p>
-<label>Bearer token <input id="token" type="password" size="30"></label>
-<button id="save">Save</button>
+<nav id="nav-signed-out"><a href="/login">Sign in</a></nav>
+<nav id="nav-signed-in"><a href="/">Home</a> · <button id="btn-logout" class="link-btn">Sign out</button></nav>
+<p>ZIP with data.csv + manifest.json + data dictionary. Byte-identical for identical inputs.</p>
 <label>Rooms (comma separated) <input id="rooms" size="30"></label>
 <label>From <input id="from" type="datetime-local"></label>
 <label>To <input id="to" type="datetime-local"></label>
@@ -21,5 +21,6 @@
 </main>
 <script src="/static/api.js"></script>
 <script src="/static/export.js"></script>
+<script src="/static/auth.js"></script>
 </body>
 </html>

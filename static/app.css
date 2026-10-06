@@ -8,3 +8,24 @@ nav li { margin: 0.3rem 0; }
 .band { position: absolute; top: 0; bottom: 0; opacity: 0.25; pointer-events: auto; }
 .band.warn { background: orange; }
 .band.err { background: red; }
+/* Auth chrome: signed-in nav hidden until auth.js sees a token (no inline styles, CSP-clean). */
+#nav-signed-in { display: none; }
+.link-btn { background: none; border: none; color: #0066cc; cursor: pointer; padding: 0; font: inherit; }
+/* Login page (static/login.html). */
+.auth-container { max-width: 26rem; margin: 2rem auto; padding: 0 1rem; }
+.auth-tabs { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+.auth-tab { flex: 1; padding: 0.5rem; background: #f0f0f0; border: none; cursor: pointer; }
+.auth-tab.active { background: #0066cc; color: white; }
+.auth-panel { display: none; }
+.auth-panel.active { display: block; }
+.form-group { margin-bottom: 1rem; }
+.form-group label { display: block; margin-bottom: 0.25rem; font-weight: bold; }
+.form-group input, .form-group select { width: 100%; padding: 0.5rem; box-sizing: border-box; }
+.btn { width: 100%; padding: 0.75rem; margin-bottom: 0.5rem; background: #0066cc; color: white; border: none; cursor: pointer; font-size: 1rem; }
+.btn:disabled { background: #ccc; cursor: not-allowed; }
+.btn-secondary { background: #666; }
+.error { color: #cc0000; margin-top: 0.5rem; min-height: 1.25rem; }
+.success { color: #006600; margin-top: 0.5rem; min-height: 1.25rem; }
+#verification-form { display: none; }
+.g-icon { vertical-align: middle; margin-right: 8px; }
+.fine-print { text-align: center; margin-top: 1.5rem; font-size: 0.875rem; color: #666; }

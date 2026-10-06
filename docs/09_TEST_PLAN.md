@@ -89,6 +89,16 @@ Entry for a milestone: SRD items identified, test cases drafted. Exit: all Must 
 | TC-FLD-03 | Real Wi-Fi outage and recovery | Q-2 |
 | TC-FLD-04 | Mains-side installation safety checklist | SAF-03..06 |
 | TC-AI-* | Created only if stretch AI features are started (AIRD) | AI-* |
+| TC-MCP-01 | MCP input validation rejects hostile args before upstream I/O | FR-100, SEC-04 |
+| TC-MCP-02 | MCP completeness math: received/expected per node + overall | FR-100 |
+| TC-MCP-03 | MCP outputs carry no notes, labeller initials or operator emails | FR-100, SEC-15 |
+| TC-MCP-04 | MCP upstream failures mapped (unknown node/run vs gateway error) | FR-100 |
+| TC-MCP-05 | MCP config requires tokens; ports/rates validated | FR-100, SEC-01 |
+| TC-MCP-10 | MCP lists exactly the six read-only tools, version-pinned blurbs | FR-100 |
+| TC-MCP-11 | MCP read journey over seeded live data; outputs clean | FR-100, SEC-15 |
+| TC-MCP-12 | MCP without/wrong bearer refused (401) before any tool runs | FR-100, SEC-01 |
+| TC-MCP-13 | MCP hostile args and unknown ids return tool errors | FR-100, SEC-04 |
+| TC-MCP-14 | MCP rate limit answers then 429 (low-rate instance) | FR-100, SEC-05 |
 
 ## 4. Test data
 Golden fixtures live in `tests/golden/` as small CSV files plus a README showing the hand calculation for every expected number. Simulator scenarios supply larger synthetic data and matching label files. No real student data is used in tests.

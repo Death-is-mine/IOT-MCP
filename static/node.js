@@ -2,7 +2,6 @@
 X axis is minutes since range start (tz-free); tables show Asia/Kolkata. */
 let HOURS = 24, U1 = null, U2 = null;
 
-document.getElementById("token").value = cemToken();
 document.querySelectorAll("#ranges button").forEach(b => {
   b.onclick = () => { HOURS = +b.dataset.h; load(); };
 });
@@ -35,7 +34,6 @@ async function load() {
   const err = document.getElementById("err");
   err.textContent = "";
   try {
-    localStorage.setItem("cem_token", document.getElementById("token").value.trim());
     const node = await nodeList();
     const to = Date.now(), from = to - HOURS * 3600_000;
     const min = ts => (ts - from) / 60000;
@@ -44,8 +42,11 @@ async function load() {
     const X = S.power_w.map(p => min(p[0]));
     const col = a => a.map(p => p[1]);
     const flags = d.flags.map(f => ({...f, ts_start: min(f.ts_start), ts_end: min(f.ts_end)}));
+    const pad2 = v => String(Math.round(v)).padStart(2, "0");
     const mk = (el, series, data, h) => new uPlot(
-      {width: 1000, height: h, series: [{label: "min"}, ...series], axes: [{label: "min since start"}, {}]},
+      {width: 1000, height: h, series: [{label: "min"}, ...series],
+       axes: [{label: "min since start",
+               values: (u, vals) => vals.map(v => ":" + pad2(v % 60))}, {}]},
       [X, ...data], document.getElementById(el));
     if (U1) U1.destroy();
     U1 = mk("ch_power", [{label: "power_w", stroke: "blue"}, {label: "current_a", stroke: "green"}],

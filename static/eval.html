@@ -10,9 +10,10 @@
 <body>
 <main>
 <h1>Evaluation: saved energy vs wrong cut-offs</h1>
-<p><a href="/">Home</a> · Offline replay of stored readings. Every figure states
+<nav id="nav-signed-out"><a href="/login">Sign in</a></nav>
+<nav id="nav-signed-in"><a href="/">Home</a> · <button id="btn-logout" class="link-btn">Sign out</button></nav>
+<p>Offline replay of stored readings. Every figure states
 its labelled hours; intervals are day-block bootstrap 95% CIs. No claim beyond them.</p>
-<label>Bearer token <input id="token" type="password" size="30"></label>
 <button id="runs">List runs</button>
 <label>Run <select id="run"></select></label>
 <h2>Saved kWh vs false-vacant events per room-week</h2>
@@ -25,5 +26,6 @@ its labelled hours; intervals are day-block bootstrap 95% CIs. No claim beyond t
 </main>
 <script src="/static/api.js"></script>
 <script src="/static/eval.js"></script>
+<script src="/static/auth.js"></script>
 </body>
 </html>

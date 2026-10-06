@@ -6,13 +6,18 @@
 <title>CEM — Classroom Energy Monitor</title>
 <link rel="stylesheet" href="/static/app.css">
 </head>
-<body>
+<body data-auth="optional">
 <main>
 <h1>Classroom Energy Monitor</h1>
 <p>Measurement project: power + presence data, quality flags, ground-truth
 labels, reproducible export, and an offline evaluation of energy saved vs
 wrong cut-offs. Monitor-only — this system cannot switch anything.</p>
-<nav>
+<nav id="nav-signed-out">
+<ul>
+<li><a href="/login">Sign in</a></li>
+</ul>
+</nav>
+<nav id="nav-signed-in">
 <ul>
 <li><a href="/fleet">Fleet status</a></li>
 <li><a href="/node">Node detail</a></li>
@@ -20,10 +25,11 @@ wrong cut-offs. Monitor-only — this system cannot switch anything.</p>
 <li><a href="/export">Export</a></li>
 <li><a href="/eval">Evaluation results</a></li>
 <li><a href="/admin">Admin</a></li>
+<li><button id="btn-logout" class="link-btn">Sign out</button></li>
 </ul>
 </nav>
-<p>All times shown in Asia/Kolkata. Sign in per the deployment's auth mode,
-then paste your bearer token on the Fleet page.</p>
+<p>All times shown in Asia/Kolkata.</p>
 </main>
+<script src="/static/auth.js"></script>
 </body>
 </html>

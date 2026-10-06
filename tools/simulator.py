@@ -14,6 +14,8 @@ import csv
 import json
 import random
 import sys
+import urllib.error
+import urllib.request
 
 DAY = 86_400_000
 SP = 5_000  # sample_period_ms
@@ -93,7 +95,6 @@ def to_batches(samples: list[dict], per_batch: int = 60) -> list[list[dict]]:
 def post_batch(gateway: str, token: str, node_id: str, fw: str, batch_samples: list[dict],
                sent_ts: int, skew_ms: int = 0) -> dict:
     import time
-    import urllib.error
 
     body = {
         "schema_version": 1, "node_id": node_id, "fw_version": fw,

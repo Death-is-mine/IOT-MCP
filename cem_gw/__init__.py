@@ -16,10 +16,20 @@ from .ingest import apply_batch, validate_batch
 from .poll import build_poll_response
 from .util import now_ms
 
-CSP = (
-    "default-src 'self'; script-src 'self'; object-src 'none'; "
-    "base-uri 'self'; frame-ancestors 'none'"
-)
+
+def csp_for(auth_mode: str) -> str:
+    """Content-Security-Policy. Firebase origins (phone reCAPTCHA scripts and
+    frames, Google identity APIs) are allowed only in firebase auth mode,
+    per docs/07_SSD.md SEC-11. Dev mode keeps the strict self-only policy."""
+    script = "'self'"
+    extra = ""
+    if auth_mode == "firebase":
+        script += " https://www.google.com https://www.gstatic.com"
+        extra = ("; frame-src 'self' https://www.google.com"
+                 "; connect-src 'self' https://identitytoolkit.googleapis.com"
+                 " https://securetoken.googleapis.com https://www.googleapis.com")
+    return ("default-src 'self'; script-src " + script + "; object-src 'none'; "
+            "base-uri 'self'; frame-ancestors 'none'" + extra)
 
 
 def err(code: str, message: str, status: int, details: list | None = None):
@@ -46,7 +56,8 @@ def create_app(cfg: Config | None = None, db=None) -> Flask:
 
     @app.after_request
     def _headers(resp):
-        resp.headers["Content-Security-Policy"] = CSP
+        resp.headers["Content-Security-Policy"] = csp_for(
+            current_app.config["CEM_CONFIG"].auth_mode)
         resp.headers["X-Content-Type-Options"] = "nosniff"
         resp.headers["Referrer-Policy"] = "no-referrer"
         return resp
@@ -111,7 +122,8 @@ def create_app(cfg: Config | None = None, db=None) -> Flask:
         samples, events, errs = validate_batch(body, node["node_id"])
         if errs:
             return err("invalid_batch", "schema validation failed", 400, errs)
-        resp = apply_batch(db, node, samples, events, batch["sent_ts"], now_ms())
+        resp = apply_batch(db, node, samples, events, batch["sent_ts"], now_ms(),
+                             batch.get("fw_version"))
         return jsonify(resp), 200
 
     @app.get("/api/v1/poll")
@@ -433,8 +445,9 @@ def create_app(cfg: Config | None = None, db=None) -> Flask:
         rv = load_rules(cfg.flag_rules_file).get("rule_version", 1)
         eid, blob, manifest = _export.build_export(
             db, rooms, frm, to, g.identity.id, cfg.display_tz, rv)
-        os.makedirs(cfg.export_dir, exist_ok=True)
-        with open(os.path.join(cfg.export_dir, eid + ".zip"), "wb") as fh:
+        os.makedirs(os.path.abspath(cfg.export_dir), exist_ok=True)
+        with open(os.path.join(os.path.abspath(cfg.export_dir), eid + ".zip"),
+                  "wb") as fh:
             fh.write(blob)
         db.put_export({"id": eid, "created_ts": manifest["created_ts"],
                        "by": g.identity.id, "manifest": manifest})
@@ -452,7 +465,7 @@ def create_app(cfg: Config | None = None, db=None) -> Flask:
         if not re_fullmatch_eid(eid):
             return err("bad_request", "bad export id", 400)
         cfg = current_app.config["CEM_CONFIG"]
-        path = os.path.join(cfg.export_dir, eid + ".zip")
+        path = os.path.join(os.path.abspath(cfg.export_dir), eid + ".zip")
         if not os.path.isfile(path):
             return err("not_found", "unknown export", 404)
         return send_file(path, mimetype="application/zip", as_attachment=True,
@@ -510,6 +523,10 @@ def create_app(cfg: Config | None = None, db=None) -> Flask:
     @app.get("/")
     def index_page():
         return current_app.send_static_file("index.html")
+
+    @app.get("/login")
+    def login_page():
+        return current_app.send_static_file("login.html")
 
     @app.get("/fleet")
     def fleet_page():

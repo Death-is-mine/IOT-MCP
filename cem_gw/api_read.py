@@ -45,6 +45,7 @@ def fleet(db, now: int | None = None) -> list[dict]:
             "last_seen_ts": n.get("last_seen_ts"),
             "fw_version": n.get("fw_version", ""),
             "mode": n.get("mode", "shadow"),
+            "sample_period_s": n.get("sample_period_s", 5),
             "completeness_24h": completeness(db, n, 86_400_000, now),
             "clock_offset_ms": n.get("clock_offset_ms"),
             "calib_age_days": round((now - calib_ts) / 86_400_000, 1) if calib_ts else None,

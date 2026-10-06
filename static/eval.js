@@ -1,12 +1,10 @@
 /* Results page: per-config curve (saved kWh vs false/room-week) + table
 with CIs and labelled hours behind every figure (FR-065/066). */
 let U = null;
-document.getElementById("token").value = cemToken();
 document.getElementById("runs").onclick = listRuns;
 document.getElementById("run").onchange = show;
 
 async function listRuns() {
-  localStorage.setItem("cem_token", document.getElementById("token").value.trim());
   const d = await cemGet("/api/v1/eval/runs");
   const sel = document.getElementById("run");
   sel.innerHTML = "";

@@ -9,9 +9,9 @@
 <body>
 <main>
 <h1>Admin</h1>
-<p><a href="/">Home</a> · All times Asia/Kolkata</p>
-<label>Admin bearer token <input id="token" type="password" size="40"></label>
-<button id="save">Save</button>
+<nav id="nav-signed-out"><a href="/login">Sign in</a></nav>
+<nav id="nav-signed-in"><a href="/">Home</a> · <button id="btn-logout" class="link-btn">Sign out</button></nav>
+<p>All times Asia/Kolkata</p>
 <h2>Nodes</h2>
 <label>Node id <input id="nid"></label>
 <label>Room <input id="room"></label>
@@ -31,5 +31,6 @@
 </main>
 <script src="/static/api.js"></script>
 <script src="/static/admin.js"></script>
+<script src="/static/auth.js"></script>
 </body>
 </html>

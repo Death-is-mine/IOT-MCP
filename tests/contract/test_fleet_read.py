@@ -19,7 +19,8 @@ def test_tc_ui_01_fleet_columns(client):
     assert len(rows) == 1
     n = rows[0]
     for col in ("node_id", "room_id", "status", "last_seen_ts", "fw_version", "mode",
-                "completeness_24h", "clock_offset_ms", "calib_age_days", "active_flags"):
+                "sample_period_s", "completeness_24h", "clock_offset_ms",
+                "calib_age_days", "active_flags"):
         assert col in n, col
     assert n["status"] in ("ONLINE", "DEGRADED", "OFFLINE")
 

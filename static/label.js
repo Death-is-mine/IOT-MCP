@@ -1,8 +1,3 @@
-document.getElementById("save").onclick = () => {
-  localStorage.setItem("cem_token", document.getElementById("token").value.trim());
-};
-document.getElementById("token").value = cemToken();
-
 const dtLocal = v => new Date(v).getTime();
 const pad = n => String(n).padStart(2, "0");
 function toInput(ms) {

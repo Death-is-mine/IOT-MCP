@@ -112,10 +112,11 @@ def validate_batch(batch: dict, node_id: str) -> tuple[list[dict], list[dict], l
 
 
 def apply_batch(db, node: dict, samples: list[dict], events: list[dict],
-                sent_ts: int, recv_ts: int) -> dict:
+                sent_ts: int, recv_ts: int, fw_version: str | None = None) -> dict:
     """Idempotent, atomic store (FR-002/FR-003) + ingest-time flags.
 
     Returns ingest response dict (FR-005). Never creates commands (FR-008).
+    Records the reporting firmware version so the fleet view stays honest.
     """
     node_id = node["node_id"]
     backfill = (recv_ts - sent_ts) > BACKFILL_THRESHOLD_MS if sent_ts else False
@@ -127,6 +128,8 @@ def apply_batch(db, node: dict, samples: list[dict], events: list[dict],
     prev_max = node.get("max_seq")
     accepted, dups, last_seq = db.write_batch(node_id, samples, events)
     patch: dict = {"last_seen_ts": recv_ts, "clock_offset_ms": recv_ts - sent_ts}
+    if isinstance(fw_version, str) and 0 < len(fw_version) <= 32:
+        patch["fw_version"] = fw_version
     if samples:
         cands = [s["seq"] for s in samples]
         if prev_max is not None:

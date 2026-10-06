@@ -24,7 +24,9 @@ def test_tc_ui_05_vendor_hash_and_no_cdn():
     for p in list(STATIC.glob("*.html")) + list(STATIC.glob("*.js")):
         text = p.read_text(encoding="utf-8")
         assert not re.search(r'https?://', text), f"external URL in {p}"
-        assert "<script>" not in text and "onclick=" not in text, f"inline script in {p}"
+        for tag in re.findall(r"<script[^>]*>", text):
+            assert "src=" in tag, f"inline script in {p}: {tag}"
+        assert "<style" not in text and "onclick=" not in text, f"inline code in {p}"
 
 
 def test_tc_ui_02_pages_and_series_alignment(client):

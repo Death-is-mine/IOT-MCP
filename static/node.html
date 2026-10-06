@@ -10,8 +10,9 @@
 <body>
 <main>
 <h1>Node detail</h1>
-<p><a href="/">Home</a> · <a href="/fleet">Fleet</a> · All times Asia/Kolkata</p>
-<label>Bearer token <input id="token" type="password" size="30"></label>
+<nav id="nav-signed-out"><a href="/login">Sign in</a></nav>
+<nav id="nav-signed-in"><a href="/">Home</a> · <a href="/fleet">Fleet</a> · <button id="btn-logout" class="link-btn">Sign out</button></nav>
+<p>All times Asia/Kolkata</p>
 <label>Node <select id="node"></select></label>
 <span id="ranges">
 <button data-h="1">1h</button><button data-h="6">6h</button><button data-h="24">24h</button><button data-h="168">7d</button>
@@ -21,12 +22,13 @@
 <div id="ch_power" class="chart"></div>
 <h2>Presence (PIR / load / mmWave)</h2>
 <div id="ch_pres" class="chart"></div>
-<h3>Flags &amp; events in range</h3>
+<h3>Flags & events in range</h3>
 <table id="flags"><thead><tr><th>Start</th><th>End</th><th>Type</th><th>Severity</th></tr></thead><tbody></tbody></table>
 <p id="err"></p>
 </main>
 <script src="/static/vendor/uPlot.iife.min.js"></script>
 <script src="/static/api.js"></script>
 <script src="/static/node.js"></script>
+<script src="/static/auth.js"></script>
 </body>
 </html>

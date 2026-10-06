@@ -141,3 +141,34 @@ def test_tc_ex_04_deterministic(client):
     raw_b = client.get(f"/api/v1/export/{b}", headers=VIEW).data
     zb = zipfile.ZipFile(io.BytesIO(raw_b)).read("data.csv")
     assert za == zb
+
+
+def test_tc_ex_05_relative_export_dir_roundtrip(tmp_path, monkeypatch):
+    """TC-EX-05/FR-050: relative CEM_EXPORT_DIR (the prod-default shape)
+    writes and serves the zip from the same directory (walkthrough found
+    POST/GET disagreeing on cwd vs Flask root_path)."""
+    from cem_gw import create_app
+    from cem_gw.config import Config
+    from cem_gw.db import MemoryDB
+    from tests.conftest import SECRET
+
+    monkeypatch.chdir(tmp_path)
+    cfg = Config.from_env(
+        {
+            "CEM_DB_MODE": "memory",
+            "CEM_AUTH_MODE": "dev",
+            "CEM_CONTROL_ENABLED": "false",
+            "CEM_DEV_SECRET": SECRET,
+            "CEM_EXPORT_DIR": "./var/exports",
+        }
+    )
+    db = MemoryDB()
+    db.put_node({"node_id": NODE, "room_id": ROOM})
+    db.put_user({"email": "view@x.test", "role": "viewer", "active": True,
+                 "created_ts": T0})
+    client = create_app(cfg, db).test_client()
+    body = {"rooms": [ROOM], "from": 0, "to": T0 + 10_000_000}
+    eid = client.post("/api/v1/export", json=body, headers=VIEW).get_json()["export_id"]
+    r = client.get(f"/api/v1/export/{eid}", headers=VIEW)
+    assert r.status_code == 200, r.get_json() if r.is_json else r.data[:200]
+    assert r.data[:2] == b"PK"

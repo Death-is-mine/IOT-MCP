@@ -9,9 +9,9 @@
 <body>
 <main>
 <h1>Fleet status</h1>
-<p><a href="/">Home</a> · All times Asia/Kolkata</p>
-<label>Bearer token <input id="token" type="password" size="40" placeholder="dev-user:you@x:secret or Firebase ID token"></label>
-<button id="save">Save</button>
+<nav id="nav-signed-out"><a href="/login">Sign in</a></nav>
+<nav id="nav-signed-in"><a href="/">Home</a> · <button id="btn-logout" class="link-btn">Sign out</button></nav>
+<p>All times Asia/Kolkata</p>
 <button id="refresh">Refresh</button>
 <table id="fleet">
 <thead><tr><th>Node</th><th>Room</th><th>Status</th><th>Last seen</th><th>FW</th>
@@ -22,5 +22,6 @@
 </main>
 <script src="/static/api.js"></script>
 <script src="/static/fleet.js"></script>
+<script src="/static/auth.js"></script>
 </body>
 </html>

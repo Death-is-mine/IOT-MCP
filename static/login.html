@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CEM — Sign in</title>
+<link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+<main>
+<h1>Sign in</h1>
+<p><a href="/">Home</a></p>
+<nav>
+<button class="auth-tab" data-tab="email">Email / Password</button>
+<button class="auth-tab" data-tab="google">Google</button>
+<button class="auth-tab" data-tab="phone">Phone</button>
+<button class="auth-tab" data-tab="dev">Dev token</button>
+</nav>
+<section data-panel="email" hidden>
+<h2>Email / Password</h2>
+<label>Email <input id="email" type="email" autocomplete="username"></label>
+<label>Password <input id="pw" type="password" autocomplete="current-password"></label>
+<button id="btn-email">Sign in</button>
+</section>
+<section data-panel="google" hidden>
+<h2>Google</h2>
+<button id="btn-google">Continue with Google</button>
+</section>
+<section data-panel="phone" hidden>
+<h2>Phone</h2>
+<label>Phone (+91…) <input id="phone" type="tel"></label>
+<button id="btn-phone-send">Send code</button>
+<label>Code <input id="code" size="8"></label>
+<button id="btn-phone-verify">Verify code</button>
+<div id="recaptcha"></div>
+</section>
+<section data-panel="dev" hidden>
+<h2>Dev token (local development only)</h2>
+<label>Token <input id="dev-token" size="50" placeholder="dev-user:you@x:secret"></label>
+<button id="btn-dev-save">Use token</button>
+</section>
+<p id="who"></p>
+<p id="err"></p>
+</main>
+<script src="/static/vendor/firebase-app-compat.js"></script>
+<script src="/static/vendor/firebase-auth-compat.js"></script>
+<script src="/static/login.js"></script>
+</body>
+</html>

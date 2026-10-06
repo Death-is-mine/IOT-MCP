@@ -49,6 +49,7 @@ Uses an official MCP SDK, Streamable HTTP transport, current spec revision (2026
 ## 7. Acceptance for AI features
 A-1: configs evaluated with CIs (AC-12). A-2/A-3/A-5/A-4: only after M7; each needs its own test cases (TC-AI-*) and the improvement rule AI-06 where applicable.
 
-## 8. Build notes — 2026-10-05
+## 8. Build notes — 2026-10-05, A-5 added 2026-10-06
 - A-1 SHIPPED as `cem_gw/evaluation/configs.py`: `pir_only`, `pir_mmwave`, `pir_co2`, `pir_timetable`, `all` — each an explicit documented rule (CO2 presence threshold 800 ppm; timetable/weekday matching in UTC; `unsure` excluded; timetable-source labels reported separately as weak hours, never trained/evaluated on).
-- A-2/A-3/A-4/A-5 NOT started: no learned model, no adaptive hold, no LLM report, no MCP server. `configs.describe()` + TC-EV-08 assert the registry stays rule-only until a learned model earns its place under AI-06.
+- A-5 SHIPPED 2026-10-06 as `mcp_server.py` + `cem_gw/mcp_server.py`: official MCP SDK, Streamable HTTP (`/mcp`, stateless), the six §6 tools over gateway GET APIs with a read-scoped credential; Bearer gate + per-caller rate limit; outputs stripped of notes/labeller/operator emails (SEC-15); every invocation logged with caller hash. AIRD "SQLite opened read-only" superseded: datastore is Firestore (D-015), so the server reads via HTTP instead of opening any DB. Prod note: env-provided gateway token is used as-is; Firebase ID tokens expire hourly, so prod needs a token-refresh loop (open).
+- A-2/A-3/A-4 NOT started: no learned model, no adaptive hold, no LLM report. `configs.describe()` + TC-EV-08 assert the registry stays rule-only until a learned model earns its place under AI-06.

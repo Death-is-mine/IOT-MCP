@@ -9,9 +9,9 @@
 <body>
 <main>
 <h1>Ground-truth labelling</h1>
-<p><a href="/">Home</a> · All times Asia/Kolkata · Labels are immutable; corrections create a new label.</p>
-<label>Bearer token (labeller+) <input id="token" type="password" size="30"></label>
-<button id="save">Save</button>
+<nav id="nav-signed-out"><a href="/login">Sign in</a></nav>
+<nav id="nav-signed-in"><a href="/">Home</a> · <button id="btn-logout" class="link-btn">Sign out</button></nav>
+<p>All times Asia/Kolkata · Labels are immutable; corrections create a new label.</p>
 <h2>New label</h2>
 <label>Room <input id="room"></label>
 <label>Start <input id="start" type="datetime-local"></label>
@@ -34,5 +34,6 @@
 </main>
 <script src="/static/api.js"></script>
 <script src="/static/label.js"></script>
+<script src="/static/auth.js"></script>
 </body>
 </html>

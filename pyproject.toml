@@ -4,3 +4,6 @@ line-length = 100
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP"]
+
+[tool.pytest.ini_options]
+markers = ["e2e: live-server + browser tests (needs Chromium; base URL via CEM_E2E_BASE_URL)"]
