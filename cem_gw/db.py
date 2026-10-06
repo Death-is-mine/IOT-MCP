@@ -352,7 +352,22 @@ class FirestoreDB:
                 self._app = initialize_app(options=opts, name="cem")
             except ValueError:
                 self._app = firebase_admin.get_app("cem")
-        self._db = firestore.client(app=self._app)
+        import os as _os
+
+        try:
+            self._db = firestore.client(app=self._app)
+            # Force credential resolution now so a missing key fails fast
+            # with our message instead of a traceback on first request.
+            self._db.collection("nodes").limit(0).get()
+        except Exception as e:
+            if not cfg.service_account_json and not _os.environ.get("FIRESTORE_EMULATOR_HOST"):
+                raise DBError(
+                    "No Firebase credentials: set FIREBASE_SERVICE_ACCOUNT_JSON "
+                    "to your service-account key file (kept outside the repo), "
+                    "or point FIRESTORE_EMULATOR_HOST at the emulator, "
+                    "or run the dev seam CEM_DB_MODE=memory for local use."
+                ) from e
+            raise
 
     # -- nodes
     def get_node(self, node_id: str) -> dict | None:

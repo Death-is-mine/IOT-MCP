@@ -4,18 +4,29 @@ Run:  python fleet_gateway.py   (dev)  |  waitress-serve via systemd (prod)
 """
 from __future__ import annotations
 
+import sys
+
 from cem_gw import create_app
 from cem_gw.config import Config
+from cem_gw.db import DBError
 
-app = create_app()
 
-
-def main() -> None:
+def main() -> int:
     import threading
 
     from cem_gw.flags.engine import run_forever
 
-    cfg: Config = app.config["CEM_CONFIG"]
+    try:
+        cfg = Config.from_env()
+        if cfg.auth_mode == "dev" and not cfg.dev_secret:
+            raise RuntimeError(
+                "CEM_AUTH_MODE=dev needs CEM_DEV_SECRET "
+                "(any local string; e.g. $env:CEM_DEV_SECRET='local-only')."
+            )
+        app = create_app(cfg)
+    except (RuntimeError, DBError) as e:
+        print(f"cannot start gateway: {e}", file=sys.stderr)
+        return 2
     stop = threading.Event()
     worker = threading.Thread(target=run_forever,
                               args=(app.config["CEM_DB"], cfg, stop), daemon=True)
@@ -30,7 +41,8 @@ def main() -> None:
             app.run(host=cfg.bind_host, port=cfg.port)
     finally:
         stop.set()
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

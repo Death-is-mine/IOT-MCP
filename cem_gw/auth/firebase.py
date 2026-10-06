@@ -7,18 +7,43 @@ from __future__ import annotations
 from .base import AuthError, Identity
 
 
-def _auth():
+def _auth(config=None):
     try:
-        from firebase_admin import auth
+        import firebase_admin
+        from firebase_admin import auth, credentials
     except ImportError as e:
         raise AuthError("firebase-admin required for firebase auth mode", 500) from e
+    if config is not None:
+        try:
+            app = firebase_admin.get_app("cem")
+        except ValueError:
+            app = None
+        if app is None:
+            if config.service_account_json:
+                cred = credentials.Certificate(config.service_account_json)
+                app = firebase_admin.initialize_app(
+                    cred, {"projectId": config.firebase_project_id}, name="cem")
+            else:
+                raise AuthError(
+                    "server Firebase is not configured: set FIREBASE_SERVICE_ACCOUNT_JSON "
+                    "or run the emulator (FIRESTORE_EMULATOR_HOST).", 500)
+        try:
+            app.credential.get_credential()
+        except AuthError:
+            raise
+        except Exception as e:
+            raise AuthError(
+                "server Firebase is not configured: set FIREBASE_SERVICE_ACCOUNT_JSON "
+                "or run the emulator (FIRESTORE_EMULATOR_HOST).", 500) from e
     return auth
 
 
 def verify_token(db, token: str, config) -> Identity:
-    auth = _auth()
+    auth = _auth(config)
     try:
         claims = auth.verify_id_token(token)
+    except AuthError:
+        raise
     except Exception:
         raise AuthError("invalid token") from None
     uid = claims.get("uid", "")
