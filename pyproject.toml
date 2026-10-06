@@ -7,3 +7,4 @@ select = ["E", "F", "I", "UP"]
 
 [tool.pytest.ini_options]
 markers = ["e2e: live-server + browser tests (needs Chromium; base URL via CEM_E2E_BASE_URL)"]
+pythonpath = ["."]  # repo root on sys.path so bare `pytest` works (CI console script)
