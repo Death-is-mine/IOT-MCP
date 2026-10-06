@@ -36,7 +36,7 @@ O-1 Google Workspace emails? Firebase or local login · O-2 framework of `fleet_
 
 ## 4. Environment facts (M0 discovery 2026-10-05)
 - `fleet_gateway.py`: DOES NOT EXIST in workspace or in GitHub repo (empty repo `Death-is-mine/IOT-MCP` created public 2026-10-05). Nothing to preserve; M0 plan creates it as a minimal thin shim.
-- Local dir `D:\Projects\Code\IOT-MCP` is NOT a git repo and NOT linked to GitHub remote yet.
+- Local dir linked + pushed 2026-10-05: commit 67aaaf3 on `main`, tracks `origin/main` (was: not a git repo).
 - Python: 3.11.9 (`python`, meets NFR-006 ≥3.11) + pip 24.0; `python3` is 3.14.0. Use 3.11 for dev.
 - OS dev machine: Windows (win32). Mini-PC OS/admin: unknown → [DEFAULT] Linux + systemd per docs (O-6).
 - Existing endpoints/behaviours to preserve: none.
@@ -62,7 +62,7 @@ O-1 Google Workspace emails? Firebase or local login · O-2 framework of `fleet_
 | M7 Hardening + acceptance | done (code) / open (field) | 81 passed 2 skipped, ruff clean, flags+eval coverage 90%; memory backup/restore OK; live HTTP smoke OK; PENDING owner/prod: Firebase project, gcloud backup drill, 7-day run, calibration + 30/30 ground-truth hours |
 
 ## 6. Known issues and risks
-- Local dir still NOT a git repo and NOT pushed; GitHub repo empty. Owner step: `git init; git add -A; git commit -m ..; git remote add origin https://github.com/Death-is-mine/IOT-MCP.git; git push -u origin main` (agent did not commit: needs explicit request).
+- RESOLVED 2026-10-05: local dir initialized, committed (67aaaf3), pushed to `main` on GitHub (was: not a git repo, empty remote).
 - Simulator replays share seqs per seed: one simulator run per node-id, else duplicates (correctly deduped). Use fresh node-ids or accept.
 - Day-long replay is honestly flagged BACKFILLED/CLOCK_DRIFT; `--minutes N --end-now` demos near-live data.
 - Standing risks: scarce ground truth, ESP32 ADC accuracy, Firebase project not yet created (prod ingest/auth untested against real backend), no 7-day unattended run yet.
